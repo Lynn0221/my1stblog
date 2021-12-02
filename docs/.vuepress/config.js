@@ -2,9 +2,9 @@ module.exports = {
   lang: "zh-CN",
   title: "Lynn's Blog",
   description: "This is my first blog!",
-  head: [['link', { rel: 'icon', href: 'https://vuejs.org/images/logo.png' }]],
+  head: [['link', { rel: 'icon', href: '/favicon.ico' }]],
   themeConfig: {
-    logo: 'https://vuejs.org/images/logo.png',
+    logo: '/image/koala.png',
     navbar: [
       { text: '首页', link: "/" },
       { text: 'HTML', link: "/guide/html/" },
