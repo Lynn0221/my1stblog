@@ -7,7 +7,36 @@ module.exports = {
     logo: 'https://vuejs.org/images/logo.png',
     navbar: [
       { text: '首页', link: "/" },
-      { text: "Github", link: "https://github.com/Lynn0221" }
+      { text: 'HTML', link: "/guide/html/" },
+      { text: 'JS', link: "/guide/javascript/" },
+      { text: "Github", link: "https://github.com/Lynn0221/myFirstBlog" }
+    ],
+    sidebarDepth: 1,
+    sidebar: {
+      "/guide/html/": [
+        {
+          text: "html",
+          children: [
+            "README.md",
+            "html基础知识.md"
+          ]
+        }
+      ],
+      "/guide/javascript/": [
+        {
+          text: "javascript",
+          children: [
+            "README.md",
+            "防抖和节流.md"
+
+          ]
+        }
+      ]
+    }
+  },
+  plugins: [
+    [
+      "@vuepress/plugin-search",
     ]
-  }
+  ]
 }
