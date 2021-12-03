@@ -10,7 +10,7 @@ module.exports = {
       { text: '首页', link: "/" },
       { text: 'HTML', link: "/guide/html/" },
       { text: 'JS', link: "/guide/javascript/" },
-      { text: "Github", link: "https://github.com/Lynn0221/myFirstBlog" }
+      { text: "Github", link: "https://github.com/Lynn0221/my1stblog" }
     ],
     sidebarDepth: 1,
     sidebar: {
