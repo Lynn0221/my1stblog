@@ -3,7 +3,11 @@ module.exports = {
   lang: "zh-CN",
   title: "Lynn's Blog",
   description: "This is my first blog!",
+<<<<<<< HEAD
   head: [['link', { rel: 'icon', href: '/favicon.ico' }]],
+=======
+  head: [['link', { rel: 'shortcut icon', href: 'favicon.ico' }]],
+>>>>>>> 3a65ee6416a89b8e2568aedae9bb1a4f8b616295
   themeConfig: {
     logo: '/image/koala.png',
     navbar: [
