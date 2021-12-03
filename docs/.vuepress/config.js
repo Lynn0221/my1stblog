@@ -1,5 +1,5 @@
 module.exports = {
-  base: "/myFirstBlog/",
+  base: "/my1stblog/",
   lang: "zh-CN",
   title: "Lynn's Blog",
   description: "This is my first blog!",
