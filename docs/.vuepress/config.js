@@ -28,8 +28,8 @@ module.exports = {
           text: "javascript",
           children: [
             "README.md",
-            "防抖和节流.md"
-
+            "防抖和节流.md",
+            "EventLoop机制.md",
           ]
         }
       ]
