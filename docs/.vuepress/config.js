@@ -8,18 +8,18 @@ module.exports = {
     logo: '/image/koala.png',
     navbar: [
       { text: '首页', link: "/" },
-      { text: 'HTML', link: "/guide/html/" },
+      { text: 'Vue', link: "/guide/vue/" },
       { text: 'JS', link: "/guide/javascript/" },
       { text: "Github", link: "https://github.com/Lynn0221/my1stblog" }
     ],
     sidebarDepth: 1,
     sidebar: {
-      "/guide/html/": [
+      "/guide/vue/": [
         {
-          text: "html",
+          text: "vue",
           children: [
             "README.md",
-            "html基础知识.md"
+            "Vuepress搭建个人博客.md"
           ]
         }
       ],

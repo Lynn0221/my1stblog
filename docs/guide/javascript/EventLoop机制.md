@@ -92,3 +92,9 @@ console.log("f"); // a c f d e b
 **-> 输出 b**
 
 执行结束后，它也被移除宏任务队列和调用栈。此时，微任务队列里也没有任务，因此第二个事件循环结束。宏任务队列也没有任务，所有代码执行结束。
+
+
+## 参考 
+[Event Loop机制到底是个啥](https://segmentfault.com/a/1190000022060158)
+
+[搞懂EventLoop机制](https://www.jianshu.com/p/58e11dc2e2e7)
