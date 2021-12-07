@@ -1,3 +1,3 @@
-# js简介
+# Javascript相关
 
-之后补
+如标题，只记录 `Javascript` 相关...

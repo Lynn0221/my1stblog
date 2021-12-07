@@ -98,7 +98,7 @@ module.exports = {
 ```
 详细配置项可以参考：[VuePress参考——配置](https://v2.vuepress.vuejs.org/zh/reference/config.html#%E7%AB%99%E7%82%B9%E9%85%8D%E7%BD%AE)
 
-> 上文提到一次最新版本的坑，即使这里，在设置`base`配置项时，之前1的版本都是 `base` 作为前缀自动地插入到所有以 / 开始的其他选项的链接中，但是设置 tab 图标的路径的时候（`head`配置项的`href`）加不上去，只能手动添加...
+> 上文提到一次最新版本的坑，就是这里，在设置`base`配置项后， `base` 作为前缀自动地插入到所有以 / 开始的其他选项的链接中，但是设置 tab 图标的路径的时候（`head`配置项的`href`）加不上去，只能手动添加...
 > ```js
 > module.exports = {
 > base: "/my1stblog/",
@@ -212,7 +212,7 @@ git push -f https://github.com/Lynn0221/my1stblog.git master:gh-pages
 3. 回到项目仓库，进入`Actions` --> `New workflow` --> `Set up this workflow`
    自定义名称 比如`main.yml`
   
-  ```
+  ```sh
   # This is a basic workflow to help you get started with Actions
 
   name: Deploy Github Pages
@@ -254,6 +254,10 @@ git push -f https://github.com/Lynn0221/my1stblog.git master:gh-pages
             FOLDER: docs/.vuepress/dist
    ``` 
 
+   设置完成！
+
    ![设置Actions](./../../.vuepress/public/image/vue/setting_actions.png)
 
    这样就配置好了~！
+
+   以后只管提交就可以了~！
