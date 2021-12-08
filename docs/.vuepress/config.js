@@ -38,6 +38,12 @@ module.exports = {
   plugins: [
     [
       "@vuepress/plugin-search",
+    ],
+    [
+      '@vuepress/plugin-google-analytics',
+      {
+        id: 'G-ESN23TFKGL',
+      },
     ]
   ]
 }
