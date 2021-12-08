@@ -10,6 +10,7 @@ module.exports = {
       { text: '首页', link: "/" },
       { text: 'Vue', link: "/guide/vue/" },
       { text: 'JS', link: "/guide/javascript/" },
+      { text: 'Others', link: "/guide/other/" },
       { text: "Github", link: "https://github.com/Lynn0221/my1stblog" }
     ],
     sidebarDepth: 1,
@@ -32,7 +33,16 @@ module.exports = {
             "EventLoop机制.md",
           ]
         }
-      ]
+      ],
+      "/guide/others/": [
+        {
+          text: "杂谈",
+          children: [
+            "README.md",
+            "Git常用操作.md",
+          ]
+        }
+      ],
     }
   },
   plugins: [
