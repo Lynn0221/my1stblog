@@ -31,6 +31,7 @@ module.exports = {
             "README.md",
             "防抖和节流.md",
             "EventLoop机制.md",
+            "Promise.md",
           ]
         }
       ],

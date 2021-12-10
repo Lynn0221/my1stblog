@@ -35,7 +35,9 @@ console.log(2);
 但在一些场景下，如果只按照进入队列的顺序依次执行的话，也会出问题。如果队列进入一个1小时的定时器，接着在进入一个请求接口函数，而如果根据进入队列的顺序执行的话，请求接口函数需要一个小时后才会响应数据。  
 因此浏览器就会将异步任务分为宏任务和微任务，然后按照 **事件循环** 的机制去执行。
 哪些事件是宏任务？哪些是微任务？
+
 宏任务：整体代码，UI交互式事件，IO，setTimeout，setInterval，setImmediate，requestAnimationFrame
+
 微任务：process.nextTick，Object.observe，MutationObserve，Promise.then catch finally
 
 ## 事件循环
