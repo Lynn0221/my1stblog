@@ -33,6 +33,7 @@ module.exports = {
             "EventLoop机制.md",
             "Promise规范.md",
             "Promise实现.md",
+            "原型和原型链.md"
           ]
         }
       ],
