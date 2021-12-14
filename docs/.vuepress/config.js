@@ -33,7 +33,9 @@ module.exports = {
             "EventLoop机制.md",
             "Promise规范.md",
             "Promise实现.md",
-            "原型和原型链.md"
+            "原型和原型链.md",
+            "深拷贝浅拷贝.md",
+            "JS中this指向.md",
           ]
         }
       ],
