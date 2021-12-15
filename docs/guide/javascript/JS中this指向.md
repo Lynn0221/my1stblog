@@ -13,8 +13,8 @@
 
 当一个函数调用时，会创建一个执行上下文，这个上下文包括函数调用的一些信息，`this` 就指向这个执行上下文。
 
-::: tips
-`this` 不是静态的，也并不是在编写的时候绑定的，而是在**运行时**绑定的。它的绑定和函数声明的位置没有关系，**只取决于函数调用的方式。**
+::: tip  
+`this` 不是静态的，也并不是在编写的时候绑定的，而是在**运行时**绑定的。它的绑定和函数声明的位置没有关系，**只取决于函数调用的方式。**  
 :::
 
 ## 默认绑定
@@ -50,8 +50,8 @@
    console.log(this); //window
    print();
    ```
-   ::: warning
-    开启严格模式后，函数内部 `this` 指向 `undefined`， 但全局对象 `window` 不会受影响。
+   ::: warning  
+    开启严格模式后，函数内部 `this` 指向 `undefined`， 但全局对象 `window` 不会受影响。  
    :::
 
 #### let/const
@@ -70,9 +70,9 @@
    console.log(this.a); // undefined
    ```
 
-   :::tips
+   ::: tips  
    `let`, `const` 定义的变量存在暂时性死区，而且不会挂载到 `window` 对象上，因此 `print` 中是无法获取到`a`和`b`的。
-   :::
+   :::  
 
 #### 对象内执行
    ```js
@@ -288,7 +288,7 @@
    * `Mary.introduce` 作为 `setTimeout` 的函数参数，会发生隐式绑定丢失，`this` 为默认绑定
    * `Lise.introduce()` 执行虽然位于 `setTimeout` 的回调函数中，但保持 `xxx.fn()` 模式，`this` 为隐式绑定，指向 `Lisa` 对象
 
-   ::: tips  
+   ::: tip  
 
    如果我们想在 `setTimeout` 和 `setInterval` 中使用外界的 `this`，需要提前存储一下，避免 `this` 丢失。
    ```js
