@@ -70,8 +70,8 @@
    console.log(this.a); // undefined
    ```
 
-   ::: tips  
-   `let`, `const` 定义的变量存在暂时性死区，而且不会挂载到 `window` 对象上，因此 `print` 中是无法获取到`a`和`b`的。
+   ::: tip  
+   `let`, `const` 定义的变量存在暂时性死区，而且不会挂载到 `window` 对象上，因此 `print` 中是无法获取到`a`和`b`的。  
    :::  
 
 #### 对象内执行
