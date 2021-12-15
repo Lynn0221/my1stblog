@@ -25,7 +25,7 @@
 
 在严格模式下，`this` 指向 `undefined`。
 
-1. 非严格模式
+#### 非严格模式
    ```js
    var foo = 123;
    function print(){
@@ -36,7 +36,7 @@
 
    print();
    ```
-2. 严格模式
+#### 严格模式
    ```js
    "use strict"
 
@@ -54,7 +54,7 @@
     开启严格模式后，函数内部 `this` 指向 `undefined`， 但全局对象 `window` 不会受影响。
    :::
 
-3. let/const
+#### let/const
    ```js
    let a = 1;
    var b = 2;
@@ -74,7 +74,7 @@
    `let`, `const` 定义的变量存在暂时性死区，而且不会挂载到 `window` 对象上，因此 `print` 中是无法获取到`a`和`b`的。
    :::
 
-4. 对象内执行
+#### 对象内执行
    ```js
    var a = 1;
    function foo(){
@@ -92,7 +92,7 @@
    ```
    `foo` 虽然在 `obj` 的 `bar` 函数中，但 `foo` 函数仍然是独立运行的，`foo` 中的 `this` 依旧指向 `window` 对象。
 
-5. 函数内执行
+#### 函数内执行
    ```js
    var a = 1;
    function outer(){
@@ -107,7 +107,7 @@
    ```
    `inner` 函数独立运行（类似于 < 4. 对象内执行 >）。这不是闭包问题！
 
-6. 自执行函数
+#### 自执行函数
    ```js
    var a = 1;
     (function () {
@@ -135,7 +135,7 @@
 
 此时 `func` 的 `this` 指向 `xxx`，但如果存在链式调用，`xxx.yyy.zzz.func()`，记住一个原则：**this 永远指向最后调用它的那个对象。**
 
-1. 隐式绑定
+#### 隐式绑定
    ```js
    var a = 1;
    function foo(){
@@ -150,7 +150,7 @@
    `obj` 是用过 `var` 定义的，`obj` 会挂载到 `window`之上的。  
    `obj.foo()` 就相当于 `window.obj.foo()`（也算是一种链式调用），这也印证了 **`this` 永远指向最后调用它的哪个对象** 规则。
 
-2. 对象链式调用
+#### 对象链式调用
    ```js
    var obj = {
      a: 1,
@@ -173,7 +173,7 @@
   
 隐式绑定丢失之后，`this` 的指向会启用默认绑定。
 
-1. 取函数别名
+#### 取函数别名
    ```js
    var a = 1;
    var obj = {
@@ -215,7 +215,7 @@
 
    `obj2.foo` 指向了 `obj.foo` 的堆内存，此后执行与 `obj` 无关（除非使用 `apply/call` 改变 `this` 指向）
 
-2. 函数作为参数传递
+#### 函数作为参数传递
    ```js
    function foo(){
      console.log(this.a);
@@ -251,7 +251,7 @@
    
    `fn()` 没有于 `obj2` 产生联系，默认绑定。
    
-3. 回调函数
+#### 回调函数
    ```js
    var name = "liyuanfang";
 
@@ -288,7 +288,8 @@
    * `Mary.introduce` 作为 `setTimeout` 的函数参数，会发生隐式绑定丢失，`this` 为默认绑定
    * `Lise.introduce()` 执行虽然位于 `setTimeout` 的回调函数中，但保持 `xxx.fn()` 模式，`this` 为隐式绑定，指向 `Lisa` 对象
 
-   ::: tips
+   ::: tips  
+
    如果我们想在 `setTimeout` 和 `setInterval` 中使用外界的 `this`，需要提前存储一下，避免 `this` 丢失。
    ```js
    const Tom = {
@@ -305,7 +306,7 @@
    ```
    :::
    
-4. 综合练习
+#### 综合练习
    ```js
    var name = "javascript";
 
@@ -344,7 +345,7 @@
 * `bind()` 函数会返回新函数，不会立即执行函数
 * `call()`, `apply()` 的区别在于 `call` 接收若干个参数，`apply` 接收数组作为参数。
 
-1. 三种调用方式比较
+#### 三种调用方式比较
   ```js
   function foo(){
     console.log(this.a);
@@ -365,7 +366,7 @@
   foo2();  // 1
   ```
 
-2. 隐式绑定丢失
+#### 隐式绑定丢失
   
   下面这段代码是隐式绑定丢失中的一个例子，让我们修正它的 `this` 指向。
   ```js
@@ -404,7 +405,7 @@
   doFoo.call(obj, obj.foo);
   ```
 
-3. 回调函数与call
+#### 回调函数与call
   ```js
   var obj = { a: 1 };
 
@@ -427,7 +428,7 @@
   ```
   `setTimeout`的语法为 `setTimeout(fn, ms)`。使用 `call` 改变回调函数 `fn` 的 `this` 指向。
 
-4. 注意 call 的位置 
+#### 注意 call 的位置 
   ```js
   function foo(){
     console.log(this.a);
@@ -460,7 +461,7 @@
   ```
   `foo().call(obj)`：先执行 `foo()` 输出 `1`。对 `foo()` 执行的返回值执行 `call`，foo的返回值函数，执行 `call()` ，将 `this` 指向 `obj`, 打印 `1`。
 
-5. 使用bind
+#### 使用bind
    将上面的 `call` 全部替换成 `bind`，输出会有什么变化。
   ```js
   function foo(){
@@ -481,7 +482,7 @@
 
   `foo().bind(obj)`: 首先执行 `foo()` ，打印 `2`，对`foo()`的返回值使用 `bind` 将 `this` 指向 `obj`，返回新的函数，不会执行函数，无输出。
 
-6. 外层this和内层this
+#### 外层this和内层this
   ```js
   function foo(){
     console.log(this.a);
@@ -496,7 +497,7 @@
   ```
   `foo.call(obj)`: 第一层函数 `foo` 通过 `call` 将 `this` 指向 `obj` ，打印 `1`；第二层函数为匿名函数，默认绑定，返回 `2`。
 
-7. 对象中的call
+#### 对象中的call
   ```js
   var obj = {
     a: "obj",
@@ -521,7 +522,7 @@
 
   `obj.foo().call(obj2)`: 第一层 `obj.foo()` 为隐式绑定，打印 `obj`; 第二层 `obj.foo()` 的返回值为匿名函数,使用 `call` 将 `this` 指向 `obj2`，打印 `obj2`
 
-8. 带参数的call
+#### 带参数的call
   ```js
   var obj = {
     a: 1,
@@ -548,11 +549,241 @@
     1. 先执行 `obj.foo.call(obj2)`，`this` 指向 `obj2` ，为传入参数，因此 `b = this.a = 3`
     2. 返回匿名函数，执行匿名函数，传入参数 `1`，默认绑定，因此 `this.a = 2`, `c = 1`
     3. `this.a = 2`, `b = 3`, `c = 1`, 最终结果 输出 `6`
+   
+### 显示绑定扩展
 
+下面来几个常用的 `call/apply` 使用。
+#### apply求数组最值
+JS中没有给数组停工类似 `max` 和 `min` 函数，只提供了 `Math.max/min`，用于求多个数的最值，所以可以借助 `apply` 方法，直接传递数组给 `Math.max/min`
+
+```js
+const arr = [1,2,3,58,41,-5,36];
+console.log(Math.max.apply(Math,arr));
+console.log(Math.min.apply(Math,arr));
+```
+
+#### 类数组转为数组
+ES6 发布之前，没有 `Array.from` 方法可以将类数组转为数组，采用 `Array.prototype.slice.call(arguments)` 或 `[].slice.call(arguments)` 将类数组转化为数组。
+
+```js
+function info() {
+  console.log(Array.isArray(arguments));  // false
+  let args = Array.prototype.slice.call(arguments);
+  console.log(args); // [1, 5, "A"]
+  console.log(Array.isArray(args));  // true
+}
+
+info(1, 5, "A");
+```
+
+#### 数组高阶函数
+日常编码中，我们会经常用到 `forEach` , `map` 等。但这些数组高阶方法，他们还有第二个参数 `thisArg`，每一个会带哦函数都是显示绑定在 `thisArg` 上的。
+
+```js
+const obj = { a: 10 };
+const arr = [1, 2, 3, 4];
+arr.forEach(function(value,index){
+  console.log(`${index}:${value} --- ${this.a}`);
+}, obj);
+
+// 0: 1 --- 10
+// 1: 2 --- 10
+// 2: 3 --- 10
+// 3: 4 --- 10
+```
 
 ## new 绑定
+使用 `new` 来构建函数，会执行如下四步操作：  
+  1. 创建一个空的简单 `JavaScript` 对象（即 `{}`）
+  2. 为步骤 1 新创建的对象添加属性 `__proto__` ， 将该属性链接至构造函数的原型对象
+  3. 将步骤 1 新创建的对象作为 `this` 的上下文
+  4. 如果该函数没有返回对象，则返回 `this`
 
-## ES6 箭头函数绑定
+通过 `new` 来调用构造函数，会生成一个新对象，并且把这个新对象绑定为调用函数的 `this`
+
+#### new绑定
+```js
+function User(name, age){
+  this.name = name;
+  this.age = age;
+}
+
+var name = "window";
+var age = 20;
+
+var user = new User("yamada", 26);
+console.log(user.name); // yamada
+```
+
+#### 属性加方法
+```js
+function User(name, age){
+  this.name = name;
+  this.age = age;
+  this.introduce = function(){
+    console.log(this.name);
+  }
+  this.howOld = function(){
+    return function(){
+      console.log(this.age)
+    }
+  }
+}
+
+var name = "window";
+var age = 20;
+
+var user = new User("yamada", 26);
+user.introduce();  // yamada
+user.howOld()();  // 20
+```
+* `user.introduce();` `this` 指向 `user`
+* `user.howOld()();` 先执行 `user.howOld()` 返回一个匿名函数，匿名函数为默认绑定，`this` 指向 `window`
+  
+#### new综合
+不愧是 `new` 界的天王山。
+
+```js
+function Foo(){
+  getName = function(){ console.log(1); };
+  return this;
+}
+
+Foo.getName = function(){ console.log(2); };
+Foo.prototype.getName = function(){ console.log(3); };
+var getName = function(){ console.log(4); };
+function getName(){ console.log(5); };
+
+Foo.getName();  // 2
+getName();     // 4
+Foo().getName();  // 1
+getName();     // 1
+new Foo.getName();  // 2
+new Foo().getName();  // 3
+new new Foo().getName();  // 3
+```
+
+## 箭头函数绑定
+箭头函数没有自己的 `this`，他的 `this` 指向外层作用域的 `this`，且指向函数定义时的 `this` 而非执行时。
+1. **this 指向外层作用域的 this**：箭头函数没有 `this` 绑定，但它可以通过作用域链查到外层作用域的  `this`
+2. **指向函数定义时的 this 而非执行时**：`JavaScript` 时静态作用域，就是函数定义之后，作用域就定死了，跟它执行时的地方无关。
+
+#### 对象方法使用箭头函数
+```js
+name = "window";
+const obj = {
+  name: "obj",
+  intro: ()=>{ console.log(this.name); }
+}
+
+obj.intro(); // window
+```
+`intro` 函数的上层作用域为 `window`。
+
+#### 箭头函数与普通函数比较
+```js
+name = "window";
+const obj = {
+  name: "obj",
+  intro: function(){
+    return () => { console.log(this.name) };
+  },
+  intro2: function(){
+    return function(){ console.log(this.name); };
+  }
+}
+
+obj.intro()(); // obj
+obj.intro2()(); // window
+```
+* `obj.intro()();`：`obj.intro()` 返回箭头函数，箭头函数的 `this` 取决于它的外层作用域，因此箭头函数的 `this` 指向 `obj`，输出 `obj`
+* `obj.intro2()();`：`obj.intro2()` 返回匿名函数，默认绑定
+
+#### 箭头函数与普通函数的嵌套
+```js
+name = "window";
+const obj1 = {
+  name: "obj1",
+  intro: function(){
+    console.log(this.name);
+    return () => { console.log(this.name); };
+  }
+}
+const obj2 = {
+  name: "obj2",
+  intro: () => {
+    console.log(this.name);
+    return function(){ console.log(this.name); };
+  }
+}
+const obj3 = {
+  name: "obj3",
+  intro: () => {
+    console.log(this.name);
+    return () => { console.log(this.name); };
+  }
+}
+
+obj1.intro()();  // obj1 obj1
+obj2.intro()();  // window window
+obj3.intro()();  // window window
+```
+* `obj2.intro()()` : `obj2.intro()` 为箭头函数，`this` 为外层作用域 `this`，指向 `window`，返回匿名函数；匿名函数，默认绑定 
+* `obj3.intro()()` : `obj3.intro()` 为箭头函数，`this` 为外层作用域 `this`，指向 `window`，返回箭头函数，同理，`this` 指向 `window`  
+
+#### new 碰上箭头函数
+```js
+function User(name, age){
+  this.name = name;
+  this.age = age;
+  this.intro = function(){
+    console.log(this.name);
+  }
+  this.howOld = () => {
+    console.log(this.age);
+  }
+}
+
+var name = "window";
+var age = 20;
+
+var user = new User("lynn", 26);
+user.intro();  // lynn 
+user.howOld();  // 26
+```
+`user` 是 `new User` 实例，因此构造函数 `User` 的 `this` 指向 `user`
+
+`user.howOld()`：是箭头函数，箭头函数 `this` 由外层作用域决定，且指向函数定义时的 `this`，外层作用域为 `User`，`this` 指向 `user`，所以为 `26`
+
+#### call 碰上箭头函数
+箭头函数由于没有 `this`，不能通过 `call/apply/bind` 来修改 `this` 指向，但可以通过修改外层作用域的 `this` 来达成间接修改
+
+```js
+var name = "window";
+const obj1 = {
+  name: "obj1",
+  intro: function(){
+    console.log(this.name);
+    return () => { console.log(this.name); };
+  }
+  intro2: () => {
+    console.log(this.name);
+    return function(){ console.log(this.name); };
+  }
+}
+
+var obj2 = { name: "obj2" };
+
+obj1.intro.call(obj2)();  // obj2 obj2
+obj1.intro().call(obj2);  // obj1 obj1
+obj1.intro2.call(obj2)(); // window window
+obj1.intro2().call(obj2); // window obj2
+```
+* `obj1.intro.call(obj2)()`：`obj1.intro.call(obj2)`，显示绑定，`this` 指向 `obj2`，输出 `obj2`，返回箭头函数；箭头函数由外层作用域决定，外层作用域为 `obj2`，故输出 `obj2` 
+* `obj1.intro().call(obj2)`：`obj1.intro()`隐式绑定，`this` 指向 `obj1`，输出 `obj1`，返回箭头函数；箭头函数由外层作用域决定，外层作用域为 `obj1`，故输出 `obj1`
+* `obj1.intro2.call(obj2)()`：`obj1.intro2.call(obj2)`为箭头函数，箭头函数的上层作用域为 `window`，输出 `window`，返回普通匿名函数；普通匿名函数 `this` 指向 `window`
+* `obj1.intro2().call(obj2)`：`obj1.intro2()`为箭头函数，箭头函数的上层作用域为 `window`，输出 `window`，返回普通匿名函数；普通匿名函数使用 `call` 改变 `this` 指向 `obj2`，故输出 `obj2`
+
 
 ## 总结
 
