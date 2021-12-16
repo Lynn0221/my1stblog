@@ -189,8 +189,8 @@
    ```
    上面将 `obj.foo` 赋值给 `foo` ，就是将 `foo` 也指向了 `obj.foo` 所指向的堆内存，此后再执行 `foo`，相当于直接执行的堆内存的函数，与 `obj` 无关，`foo` 为默认绑定。
 
-   :::waring
-   不要把这里理解成 `window.foo` 执行，如果 `foo` 为 `let / const` 定义，`foo` 不会挂载到 `window`上，但不会影响最后的打印结果。
+   ::: warning  
+   不要把这里理解成 `window.foo` 执行，如果 `foo` 为 `let / const` 定义，`foo` 不会挂载到 `window`上，但不会影响最后的打印结果。  
    :::
 
    ```js
@@ -784,8 +784,234 @@ obj1.intro2().call(obj2); // window obj2
 * `obj1.intro2.call(obj2)()`：`obj1.intro2.call(obj2)`为箭头函数，箭头函数的上层作用域为 `window`，输出 `window`，返回普通匿名函数；普通匿名函数 `this` 指向 `window`
 * `obj1.intro2().call(obj2)`：`obj1.intro2()`为箭头函数，箭头函数的上层作用域为 `window`，输出 `window`，返回普通匿名函数；普通匿名函数使用 `call` 改变 `this` 指向 `obj2`，故输出 `obj2`
 
+#### 箭头函数扩展
+* 箭头函数没有 `this`，它的 `this` 是通过作用域链查到外层作用域的 `this`，且指向函数定义时的 `this` 而非执行时
+* 不可以用做构造函数，不能使用 `new` 命令，否则会报错
+* 箭头函数没有 `arguments` 对象，如果要用，使用 `rest` 参数代替
+* 不可以使用 `yield` 命令，因此箭头函数不能用作 `Generator` 函数
+* 不能用 `call/apply/bind` 修改 `this` 指向，但可以通过修改外层作用域的 `this` 来间接修改
+* 箭头函数没有 `prototype` 属性 
+  
+避免使用场景
+1. 箭头函数定义对象方法
+   ```js
+   const user = {
+     name: "user",
+     intro: () =>{
+       console.log(this.name);
+     } 
+   }
+
+   user.intro(); //undefined
+   ```
+
+2. 箭头函数不能作为构造函数
+   ```js
+   const User = (name, age) => {
+     this.name = name;
+     this.age = age;
+   }
+
+   var user = new User("user", 28); // Uncaught TypeError: User is not a constructor
+   ```
+
+3. 事件的回调函数
+   DOM 中事件的回调函数中 this 已经封装指向了调用元素，如果使用构造函数，其 this 会指向 window 对象
+   ```js
+   document.getElementById("btn").addEventListener("click", () => {
+     console.log(this); // window
+   })
+   ```
 
 ## 总结
+* 默认绑定  
+  非严格模式下，`this` 指向 全局；严格模式下，`this` 指向 `undefined`
+
+* 隐式绑定  
+  满足 `xxx.fn()` 格式，`fn` 的 `this` 指向 `xxx`。如果存在链式调用，`this` 永远存在指向最后调用它的对象
+
+* 隐式绑定丢失  
+  起函数别名，通过别名运行；函数作为参数传递
+
+* 显示绑定  
+  使用 `call/apply/bind` 修改 `this` 指向
+
+* new 绑定  
+  通过 `new` 来调用狗仔函数，会生成一个新对象，并且把这个新对象绑定为调用函数的 `this`
+
+* 箭头函数绑定  
+  箭头函数没有 `this`，它的 `this` 是通过作用域链查到外层作用域链的 `this`，且指向函数定义时的 `this` 而非执行时
+
+## 综合题
+1. 对象综合题
+```js
+var name = "window";
+var user1 = {
+  name: "user1",
+  foo1: function(){
+    console.log(this.name);
+  },
+  foo2: () => { console.log(this.name) },
+  foo3: function(){
+    return function(){
+      console.log(this.name);
+    }
+  },
+  foo4: function(){
+    return () => {
+      console.log(this.name);
+    }
+  }
+}
+
+var user2 = { name: "user2" };
+
+user1.foo1();  // user1
+user1.foo1.call(user2); // user2
+
+user1.foo2();  // window
+user1.foo2.call(user2);  //window
+
+user1.foo3()();  // window
+user1.foo3.call(user2)(); // window
+user1.foo3().call(user2); // user2
+
+user1.foo4()(); // user1
+user1.foo4.call(user2)();  // user2
+user1.foo4().call(user2);  // user1
+```
+
+2. 隐式绑定丢失
+```js
+var x = 10;
+var foo = {
+  x: 20,
+  bar: function(){
+    var x = 30;
+    console.log(this.x);
+  }
+}
+
+foo.bar();    // 20
+(foo.bar)();    // 20
+(foo.bar = foo.bar)();   // 10
+(foo.bar, foo.bar)(); // 10
+```
+* `(foo.bar)()` : 运算符优先级的只是，成员访问与函数调用优先级相同，默认从左到右，因此括号可有可无，隐式绑定
+* `(foo.bar = foo.bar)()` : 隐式绑定丢失，给 foo.bar 起别名，虽然名字没变，但是 foo.bar 上已经跟 foo 无关了，默认绑定
+* `(foo.bar, foo.bar)()` : 隐式绑定丢失，其函数别名，将逗号表达式的值（第二个 foo.bar）赋值给新变量，之后执行新变量所指向的函数，默认绑定
+
+3. arguments
+```js
+var length = 10;
+function fn(){
+  console.log(this.length);  // 10
+}
+
+var obj = {
+  length: 5,
+  method: function(fn){
+    fn();
+    arguments[0](); // 2
+  }
+};
+
+obj.method(fn,1);
+```
+* `arguments[0]()` : `arguments`是一个类数组，arguments 展开是这样的：
+  
+```js
+arguments = {
+  0：fn，
+  1：1，
+  length：2
+}
+```
+隐式绑定，`fn` 函数 `this` 指向 `argumens`，打印 2
+
+4. 压轴题
+```js
+var number = 5;
+var obj = {
+  number: 3,     // (*)
+  fn: (function(){
+    var number;               // (1)
+    this.number *= 2;         // (2)
+    number = number * 2;      // (3)
+    number = 3;               // (4)
+    return function(){
+      var num = this.number;    // (5)
+      this.number *= 2;         // (6)
+      console.log(num);         // (7)
+      number *= 3;              // (8)
+      console.log(number);      // (9)
+    }
+  })()
+}
+
+var myFun = obj.fn;
+myFun.call(null); // 10 9
+obj.fn();  // 3 27 
+console.log(window.number);  // 20
+```
+::: details  
+`fn.call(null)` 和 `fn.call(undefined)` 相当于 `fn()`  
+:::
+
+* `obj.fn` 为立即执行函数，默认绑定 `this` 指向 `window`   
+  (1)`var number` 在 AO 中添加 `number` 属性，值为 `undefined`  
+  (2)`this.number *= 2` 由于 `this` 指向 `window`，经过计算 `window.number = 10`  
+  (3)`number = number * 2` 在 AO 中 `number` 还没有进行赋值，所以 `number = NaN`  
+  (4)`number = 3;` 对 `number` 进行赋值，`3` 替换原来的 `NaN`  
+  返回匿名函数  
+
+* `var myFun = obj.fn; myFun.call(null);` 起函数别名，隐式绑定丢失，`this` 指向 `window`  
+  (5)`var num = this.number` 经过 `obj.fn` 的立即执行，此时 `window.number = 10`，因此 `num = 10`  
+  (6)`this.number *= 2` 计算得 `window.number = 20`  
+  (7)输出 `10`  
+  (8)`number *= 3` 当前 `AO` 中没有 `number` 属性，沿作用域链可在立即执行函数的 `AO` 中查到 `number = 3`，经过计算 `number = 9`  
+  (9)输出 `9`  
+
+* `obj.fn()` 隐式绑定，`this` 指向 `obj`  
+  (5)`var num = this.number`隐式绑定 `this` 指向 `obj.num = 3` (*)  
+  (6)`this.number *= 2` 计算得 `obj.number = 6`  
+  (7)输出 `3`  
+  (8)`number *= 3` 当前 `AO` 中没有 `number` 属性，沿作用域链可在立即执行函数的 `AO` 中查到 `number = 9`，经过计算 `number = 27`  
+  (9)输出 `27`  
+
+* `console.log(window.number)` 输出 `20`
+
+::: details  
+这里解释一下，为什么 `myFun.call()` 执行时，找不到 `number` 变量，是去找立即执行函数 `AO` 中的 `number`，而不是找 `window.number`。Javascript 采用的静态作用域，当定义函数后，作用域链就已经定死。  
+:::
+
+5. 面试题
+```js
+var num = 10;
+var obj = { num: 20 };
+obj.fn = (function(num){
+  this.num = num * 3;
+  num++;
+  return function(n){
+    this.num += n;
+    num++;
+    console.log(num);
+  }
+})(obj.num)
+
+var fn = obj.fn;
+fn(5);   
+obj.fn(10);
+console.log(num, obj.num);
+```
+这个就不解释了，答案附上。
+
+```
+22
+23
+65
+30
+```
 
 ## 参考
 
