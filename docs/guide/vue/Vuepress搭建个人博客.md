@@ -114,7 +114,7 @@ module.exports = {
 
 主题配置取决于你使用的主题是什么。  
 这里就推一个比较火的一个主题  [vuepress-theme-reco](https://vuepress-theme-reco.recoluan.com/)  
-此外也有很多，也可以开发一个，具体参考官方文档 https://v2.vuepress.vuejs.org/zh/guide/theme.html#%E6%9C%AC%E5%9C%B0%E4%B8%BB%E9%A2%98
+此外也有很多，也可以开发一个，具体参考[官方文档](https://v2.vuepress.vuejs.org/zh/guide/theme.html#%E6%9C%AC%E5%9C%B0%E4%B8%BB%E9%A2%98)
 
 
 另外，对于每个 `Markdown` 文件可以包含一个 YAML Frontmatter。Frontmatter 必须在文件的顶部。通过 Frontmatter 覆盖站点配置的一些配置项。Frontmatter 可以当作页面级作用域的配置。
