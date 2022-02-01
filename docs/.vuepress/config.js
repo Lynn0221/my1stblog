@@ -20,7 +20,8 @@ module.exports = {
           text: "vue",
           children: [
             "README.md",
-            "Vuepress搭建个人博客.md"
+            "Vuepress搭建个人博客.md",
+            "初识Vue.md",
           ]
         }
       ],
@@ -45,6 +46,7 @@ module.exports = {
           children: [
             "README.md",
             "Git常用操作.md",
+            "设计模式.md",
           ]
         }
       ],
