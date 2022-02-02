@@ -40,9 +40,9 @@ module.exports = {
           ]
         }
       ],
-      "/guide/others/": [
+      "/guide/other/": [
         {
-          text: "other",
+          text: "杂谈",
           children: [
             "README.md",
             "Git常用操作.md",
