@@ -42,11 +42,12 @@ module.exports = {
       ],
       "/guide/others/": [
         {
-          text: "杂谈",
+          text: "other",
           children: [
             "README.md",
             "Git常用操作.md",
             "设计模式.md",
+            "shell.md",
           ]
         }
       ],
